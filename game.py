@@ -1,10 +1,9 @@
 import sys
 import os
 import random
-from sty import fg, bg, ef, rs
+from sty import fg, rs
 
 def play():
-
     arts = {
             'r': 
             '''
@@ -40,35 +39,38 @@ def play():
     losts = 0 
     draws = 0
     rounds = 0
+    already = -1
 
     print(fg(128,0,0) + "Hello my friend, welcome to rock-paper-scissors game!\n" + fg.rs)
 
-
     while True:
         ask = input("Please choose your tool!\n 1: Rock\n 2: Paper\n 3: Scissors\n Number of your choice: ")
+        print(chr(27) + "[2J")
+        
+        def statics(used):
+            return fg(255,127,80) + '\nYour statics: ' + str(matches - used) + ' matches, ' + str(wins) + ' wins, ' + str(draws) + ' draws, ' + str(losts) + ' losts\n' + fg.rs
 
-        def statics():
-            return fg(255,127,80) + '\nYour statics: ' + str(matches) + ' matches, ' + str(wins) + ' wins, ' + str(draws) + ' draws, ' + str(losts) + ' losts' + fg.rs
+        if ask == 'statics' and matches >= 1:
+            rounds -= 1 
+            already += 1
+            print(statics(already))
 
         if ask == 'quit':
-            print(statics())
+            print(statics(already + 1))
             print('Hope to see you soon!')
             sys.exit()
 
-        if ask == 'statics' and matches >= 1:
-            print(statics())
-
         if (ask.isdigit() and int(ask) <= 3 and int(ask) > 0) or ask == "statics":
-
             matches += 1
             rounds += 1
-            print(fg(0,191,255) + "\nRound " + str(rounds) + fg.rs)
+            if ask != "statics":
+                print(fg(0,191,255) + "\nRound " + str(rounds) + fg.rs)
 
             if ask == '1':
                 cpu = random.choice(signs)
                 if cpu == 'rock':
                     print(fg(255, 255, 10) + 'rock <> rock'+ fg.rs)
-                    print(fg(238,130,238) + "It is a draw\n"+ fg.rs)
+                    print(fg(139,69,19) + "It is a draw\n"+ fg.rs)
                     draws += 1
                 elif cpu == 'paper':
                     print(fg(255, 255, 10) + 'rock <> paper'+ fg.rs)
@@ -89,7 +91,7 @@ def play():
                     wins += 1
                 elif cpu == 'paper':
                     print(fg(255, 255, 10) + 'paper <> paper'+ fg.rs)
-                    print(fg(238,130,238) + 'It is a draw\n'+ fg.rs)
+                    print(fg(139,69,19) + 'It is a draw\n'+ fg.rs)
                     draws += 1  
                 elif cpu == 'scissors':
                     print(fg(255, 255, 10) + 'paper <> scissors'+ fg.rs)
@@ -110,7 +112,7 @@ def play():
                     wins += 1  
                 elif cpu == 'scissors':
                     print(fg(255, 255, 10) + 'scissors <> scissors'+ fg.rs)
-                    print(fg(238,130,238) + "It is a draw!\n"+ fg.rs)
+                    print(fg(139,69,19) + "It is a draw!\n"+ fg.rs)
                     draws += 1
                 else:
                     print("Please give me a valid name!\n")
