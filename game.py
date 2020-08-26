@@ -186,5 +186,9 @@ ___(____    '---
         else:
             print(fg(255, 10, 10) + "\nYou have to type a number between 1 and 3!\n"+ fg.rs)
 
-if sys.argv[1] == "start":
+if len(sys.argv) > 1 and sys.argv[1] == "start":
     play()
+
+else:
+    if __name__ == '__main__':
+        play()
